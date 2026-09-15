@@ -35,6 +35,14 @@ services:
     env_file:
       - path: ./.env
         required: false
+    # Privacy hardening: JOBOPS_DISABLE_ANALYTICS=true (see .env) already turns
+    # off client/server telemetry code paths. This is defense-in-depth so the
+    # telemetry domains never resolve from inside the container even if a
+    # future upstream change forgets to check that flag.
+    extra_hosts:
+      - "umami.dakheera47.com:127.0.0.1"
+      - "openpanel.dakheera47.com:127.0.0.1"
+      - "openpanel.dev:127.0.0.1"
     develop:
       watch:
         # Rebuild container when package.json changes
